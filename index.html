@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #fff0f5;
+      background-color: #fff7ed;
       text-align: center;
       margin: 0;
       padding: 20px;
@@ -30,7 +30,7 @@
     #message {
       margin-top: 30px;
       font-size: 1.8em;
-      color: #d63384;
+      color: #f97316;
       font-weight: bold;
       display: none;
     }
@@ -40,9 +40,9 @@
 
 <h1>Match 5 to reveal</h1>
 <div id="grid"></div>
-<div id="message">You’re getting a niece / granddaughter</div>
+<div id="message">You’re getting a niece / granddaughter!</div>
 
-<!-- Include Confetti Library -->
+<!-- Confetti Library -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
 <script>
@@ -56,120 +56,4 @@
   let revealedBows = 0;
 
   // Prepare symbols
-  const symbols = Array(bowCount).fill("🎀")
-    .concat(Array(totalTiles - bowCount).fill("🧢"))
-    .sort(() => Math.random() - 0.5);
-
-  // Create scratch canvases
-  symbols.forEach((symbol) => {
-    const container = document.createElement("div");
-    const canvas = document.createElement("canvas");
-    canvas.width = 100;
-    canvas.height = 100;
-
-    const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#d63384";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.font = "40px serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillStyle = "white";
-    ctx.fillText("🎁", canvas.width / 2, canvas.height / 2);
-
-    const hiddenText = symbol;
-
-    // Create offscreen canvas to reveal
-    const revealed = document.createElement("canvas");
-    revealed.width = 100;
-    revealed.height = 100;
-    const rctx = revealed.getContext("2d");
-    rctx.fillStyle = "#ffffff";
-    rctx.fillRect(0, 0, revealed.width, revealed.height);
-    rctx.font = "40px serif";
-    rctx.textAlign = "center";
-    rctx.textBaseline = "middle";
-    rctx.fillText(hiddenText, revealed.width / 2, revealed.height / 2);
-
-    const image = revealed;
-
-    let isDrawing = false;
-
-    canvas.addEventListener("mousedown", () => isDrawing = true);
-    canvas.addEventListener("mouseup", () => isDrawing = false);
-    canvas.addEventListener("mouseleave", () => isDrawing = false);
-    canvas.addEventListener("mousemove", draw);
-    canvas.addEventListener("touchstart", () => isDrawing = true);
-    canvas.addEventListener("touchend", () => isDrawing = false);
-    canvas.addEventListener("touchcancel", () => isDrawing = false);
-    canvas.addEventListener("touchmove", draw);
-
-    function draw(e) {
-      if (!isDrawing) return;
-      e.preventDefault();
-
-      const rect = canvas.getBoundingClientRect();
-      const pos = (e.touches ? e.touches[0] : e);
-      const x = pos.clientX - rect.left;
-      const y = pos.clientY - rect.top;
-
-      ctx.globalCompositeOperation = "destination-out";
-      ctx.beginPath();
-      ctx.arc(x, y, 15, 0, 2 * Math.PI);
-      ctx.fill();
-
-      checkReveal();
-    }
-
-    function checkReveal() {
-      const pixels = canvas.getContext("2d").getImageData(0, 0, 100, 100);
-      let transparent = 0;
-      for (let i = 0; i < pixels.data.length; i += 4) {
-        if (pixels.data[i + 3] === 0) transparent++;
-      }
-      if (transparent / (100 * 100) > 0.4) {
-        reveal();
-      }
-    }
-
-    function reveal() {
-      canvas.parentNode.replaceChild(image, canvas);
-      if (symbol === "🎀") {
-        revealedBows++;
-        if (revealedBows === 5) {
-          message.style.display = "block";
-          launchConfetti();
-        }
-      }
-    }
-
-    container.appendChild(canvas);
-    grid.appendChild(container);
-  });
-
-  function launchConfetti() {
-    const duration = 3 * 1000;
-    const end = Date.now() + duration;
-
-    (function frame() {
-      confetti({
-        particleCount: 5,
-        angle: 60,
-        spread: 55,
-        origin: { x: 0 }
-      });
-      confetti({
-        particleCount: 5,
-        angle: 120,
-        spread: 55,
-        origin: { x: 1 }
-      });
-
-      if (Date.now() < end) {
-        requestAnimationFrame(frame);
-      }
-    })();
-  }
-</script>
-
-</body>
-</html>
+  cons
